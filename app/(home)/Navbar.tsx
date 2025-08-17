@@ -23,6 +23,7 @@ interface NavbarItemProps {
 const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
   return (
     <Button
+      asChild
       variant="outline"
       className={cn(
         "bg-white hover:bg-slate-300 rounded-md hover:border-primary border-transparent",
@@ -30,9 +31,7 @@ const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
           "bg-slate-300 text-white hover:bg-slate-300 hover:text-white"
       )}
     >
-      <Link href={href} className="text-black">
-        {children}
-      </Link>
+      <Link href={href}>{children}</Link>
     </Button>
   );
 };
@@ -49,7 +48,7 @@ export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   return (
     <nav className="bg-gray-800 p-4 items-center flex flex-row justify-between">
-      <Link href="/" className="pl-6 items-center" passHref>
+      <Link href="/" className="pl-6 items-center">
         <span
           className={cn("text-2xl font-semibold text-white", poppins.className)}
         >
@@ -63,9 +62,7 @@ export const Navbar = () => {
             href={item.href}
             isActive={pathname === item.href}
           >
-            <Link href={item.href} className="text-black">
-              {item.label}
-            </Link>
+            {item.label}
             <NavbarSidebar
               open={isSidebarOpen}
               onOpenChange={setIsSidebarOpen}
