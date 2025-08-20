@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const SubCategoryMenu = ({ category, isOpen, position }: Props) => {
-  console.log("SubCategoryMenu Props:", { category, isOpen, position });
   if (
     !isOpen ||
     !category.subcategories ||

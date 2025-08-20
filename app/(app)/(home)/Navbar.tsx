@@ -8,6 +8,9 @@ import { usePathname } from "next/navigation";
 import { NavbarSidebar } from "./navbar-sidebar";
 import { MenuIcon } from "lucide-react";
 
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -46,6 +49,8 @@ const navbarItems = [
 export const Navbar = () => {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
   return (
     <nav className="bg-gray-800 p-4 items-center flex flex-row justify-between">
       <Link href="/" className="pl-6 items-center">
@@ -71,18 +76,28 @@ export const Navbar = () => {
           </NavbarItem>
         ))}
       </div>
-      <div className="hidden lg:flex items-center gap-2">
-        <Button variant="outline" className="text-white bg-red-500" asChild>
-          <Link prefetch href="/sign-in">
-            Login
-          </Link>
-        </Button>
-        <Button variant="default" className="text-white" asChild>
-          <Link prefetch href="/sign-up">
-            Sign Up
-          </Link>
-        </Button>
-      </div>
+      {session.data?.user ? (
+        <div className="hidden lg:flex items-center gap-2">
+          <Button variant="outline" className="text-white bg-red-500" asChild>
+            <Link prefetch href="/admin">
+              Dashboard
+            </Link>
+          </Button>
+        </div>
+      ) : (
+        <div className="hidden lg:flex items-center gap-2">
+          <Button variant="outline" className="text-white bg-red-500" asChild>
+            <Link prefetch href="/sign-in">
+              Login
+            </Link>
+          </Button>
+          <Button variant="default" className="text-white" asChild>
+            <Link prefetch href="/sign-up">
+              Sign Up
+            </Link>
+          </Button>
+        </div>
+      )}
       <div className="flex lg:hidden  items-center justify-center">
         <Button
           variant="ghost"
