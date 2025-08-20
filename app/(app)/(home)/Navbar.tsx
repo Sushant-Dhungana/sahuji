@@ -73,10 +73,14 @@ export const Navbar = () => {
       </div>
       <div className="hidden lg:flex items-center gap-2">
         <Button variant="outline" className="text-white bg-red-500" asChild>
-          <Link href="/login">Login</Link>
+          <Link prefetch href="/sign-in">
+            Login
+          </Link>
         </Button>
         <Button variant="default" className="text-white" asChild>
-          <Link href="/signup">Sign Up</Link>
+          <Link prefetch href="/sign-up">
+            Sign Up
+          </Link>
         </Button>
       </div>
       <div className="flex lg:hidden  items-center justify-center">
