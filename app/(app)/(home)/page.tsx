@@ -1,16 +1,14 @@
+"use client";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
-/**
- * Render the static Home page.
- *
- * Returns a simple React component that renders a top-level div containing an H1 with "Home Page".
- *
- * @returns The JSX element for the Home page.
- */
 export default function Home() {
+  const trpc = useTRPC();
+  const categories = useQuery(trpc.categories.getMany.queryOptions());
   return (
     <div>
-      <h1>Home Page</h1>
+      <h1>{JSON.stringify(categories.data, null, 2)}</h1>
     </div>
   );
 }
